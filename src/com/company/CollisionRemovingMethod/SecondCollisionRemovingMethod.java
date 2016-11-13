@@ -14,34 +14,18 @@ import java.util.Arrays;
 
 public class SecondCollisionRemovingMethod extends CollisionMethod {
 
-    HashingFunction3 hashingFunction3 = new HashingFunction3();
     Long[][] array; // array[x][0] - number element; array[x][1] - pointer element
-
-
 
     public int getChainlenght(Long number,HashingFunction hashingFunction) throws Exception {
         Integer chainLength = 0;
         int hashValue = getHashValueWithLoadedHashMethod(number, hashingFunction);
-       // System.out.println("NUmber "+number+" hashvalue "+hashValue);
         while ((!compareNumbers(number,hashValue))){
-
-            try{
                 hashValue= Long.valueOf(array[hashValue][1]).intValue();
-                System.out.println("hashvalue" + hashValue+" number "+ Long.valueOf(array[hashValue][0])+" searchable number "+number );
-
-            }catch (NullPointerException e){
-                System.out.println("Broken hashvalue" + hashValue+" number "+ Long.valueOf(array[hashValue][0])+" number comparable "+number );
-                break;
-
-            }
-
-
-            chainLength++;
+                chainLength++;
         }
-        // maybe write to file????
         FileSave fileSave = new FileSave();
         String resultsOfNumberSearch = fileSave.searchDataToString(hashValue,number, array[hashValue][0].longValue());
-        fileSave.saveToTxt("wynik.txt",resultsOfNumberSearch);
+        fileSave.saveToTxt("wynik_"+hashingFunction.getName()+"_"+this.getName() +".txt",resultsOfNumberSearch);
 
         return chainLength;
     }
@@ -50,15 +34,11 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
         return (number == array[hashValue][0].longValue());
     }
 
-
     public void createDataArrayAndInputNUmbers(String fileName, HashingFunction hashingFunction) throws Exception {
-        BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
         getNuberOflines(fileName);
         createDataArray(fileName);
         inputDataToArray(fileName, hashingFunction);
     }
-
-
 
     public int getHashValueWithLoadedHashMethod(Long line,HashingFunction hashingFunction) throws Exception {
 
@@ -79,6 +59,9 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
         return "com.company.CollisionRemovingMethod.SecondCollisionRemovingMethod";
     }
 
+    public String getName(){
+        return "SecondCollisionRemovingMethod";
+    }
 
     public void inputDataToArray(String fileName,HashingFunction hashingFunction) throws Exception {
         BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
@@ -100,7 +83,6 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
         }
         reader.close();
     }
-
 
     public int getChainElementWithEmptyPointer(int hashValue) {
         Long pointer = Long.parseLong(String.valueOf(hashValue));
@@ -180,21 +162,6 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
         }
         reader.close();
         return lines;
-    }
-
-    public void testInput(String fileName) throws IOException {
-        BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
-        String tLine;
-        HashingFunction3 hashingFunction3 = new HashingFunction3();
-
-        int i = 0;
-        while ((tLine = b.readLine()) != null) {
-            Integer hashValue = hashingFunction3.getHashValue(Long.parseLong(tLine));
-
-            i++;
-        }
-        reader.close();
     }
 
     @Override

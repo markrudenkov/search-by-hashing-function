@@ -13,12 +13,16 @@ public class Main {
 
 
     public static void main(String[] args) throws Exception {
-        HashingFunction3 hashingFunction3 = new HashingFunction3(2.0E-7D, 10000);
         String filepath = "C:\\Users\\Jan Nachtigal\\Desktop\\e\\V semesrtr\\Algorytmy is truktury danych\\dziesieckilo.txt";
+        HashingFunction3 hashingFunction3 = new HashingFunction3(2.0E-7D, 10000);
 
         SecondCollisionRemovingMethod secondCollisionRemovingMethod = new SecondCollisionRemovingMethod();
-        Statistics statistics = new Statistics();
         secondCollisionRemovingMethod.createDataArrayAndInputNUmbers(filepath, hashingFunction3);
+
+        Statistics statistics = new Statistics();
         statistics.getStatistics(filepath, secondCollisionRemovingMethod, hashingFunction3);
+
+
+        System.out.println("Coumputation ended");
     }
 }

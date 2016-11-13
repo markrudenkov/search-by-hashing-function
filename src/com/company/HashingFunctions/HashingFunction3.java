@@ -27,4 +27,8 @@ public class HashingFunction3 extends HashingFunction {
         return "com.company.HashingFunctions.HashingFunction3";
     }
 
+    public String getName(){
+        return "HashingFUnction3";
+    }
+
 }

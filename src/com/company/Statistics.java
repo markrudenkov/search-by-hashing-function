@@ -27,7 +27,7 @@ public class Statistics {
         int maxchain = this.getMaxChain().intValue();
         FileSave fileSave = new FileSave();
         String statistics = "Statistics: average chain lenght " + averageChain + "; max chain length " + maxchain;
-        fileSave.saveToTxt("wynik.txt", statistics);
+        fileSave.saveToTxt("wynik_"+hashingFunction.getName()+"_"+colisionMethod.getName() +".txt", statistics);
     }
 
     public double getAverageChain() {

@@ -5,4 +5,5 @@ package com.company.CollisionRemovingMethod;
  */
 public abstract class CollisionMethod {
     public abstract String getClassName();
+    public abstract String getName();
 }
