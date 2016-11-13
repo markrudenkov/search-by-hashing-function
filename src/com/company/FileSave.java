@@ -5,9 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-/**
- * Created by Jan Nachtigal on 11/10/2016.
- */
+
 public class FileSave {
 
 

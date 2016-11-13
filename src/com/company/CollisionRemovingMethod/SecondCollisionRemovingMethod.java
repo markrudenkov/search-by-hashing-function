@@ -35,24 +35,8 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
     }
 
     public void createDataArrayAndInputNUmbers(String fileName, HashingFunction hashingFunction) throws Exception {
-        //getNuberOflines(fileName);
         createDataArray(fileName,  hashingFunction);
         inputDataToArray(fileName, hashingFunction);
-    }
-
-    public int getHashValueWithLoadedHashMethod(Long line,HashingFunction hashingFunction) throws Exception {
-
-        Class myclass = Class.forName(hashingFunction.getClassName());
-        int hashValue=0;
-        Method[] methods = myclass.getMethods();
-       //Object object = myclass.newInstance();
-
-        for (int i = 0; i < methods.length; i++) {
-            if (methods[i].getName().startsWith("getHashValue")) {
-                hashValue= (int) methods[i].invoke(hashingFunction,line);
-            }
-        }
-        return hashValue;
     }
 
     public String getClassName(){
@@ -64,7 +48,7 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
     }
 
     public void inputDataToArray(String fileName,HashingFunction hashingFunction) throws Exception {
-        BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
+        //BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
         String line = null;
 
@@ -95,20 +79,20 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
         return currentHashValue;
     }
 
+    private void createDataArray(String fileName, HashingFunction hashingFunction) throws Exception {
+        int numberOflines = getNuberOflines(fileName);
+        int minArraySize = getMinimalArraySize(fileName, hashingFunction);
+
+        if (numberOflines > minArraySize) {
+            this.array = new Long[numberOflines][2];
+        } else {
+            this.array = new Long[minArraySize][2];
+        }
+    }
+
     public int getIndexLastEmptyElement() {
         int indexLastEmptyElement = 0;
         for (int i = this.array.length - 1; i > 0; i--) {
-            if (checkIfEmptyNumberElement(i)) {
-                indexLastEmptyElement = i;
-                break;
-            }
-        }
-        return indexLastEmptyElement;
-    }
-
-    public int getIndexLastEmptyElement(int index) {
-        int indexLastEmptyElement = 0;
-        for (int i = index; i > 0; i--) {
             if (checkIfEmptyNumberElement(i)) {
                 indexLastEmptyElement = i;
                 break;
@@ -127,41 +111,6 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
         else return false;
     }
 
-    private void createDataArray(String fileName, HashingFunction hashingFunction) throws Exception {
-        int numberOflines = getNuberOflines(fileName);
-        int minArraySize = getMinimalArraySize(fileName, hashingFunction);
-
-        if (numberOflines > minArraySize) {
-            this.array = new Long[numberOflines][2];
-        } else {
-            this.array = new Long[minArraySize][2];
-        }
-    }
-
-    public int getMinimalArraySize(String fileName, HashingFunction hashingFunction)throws IOException{
-        int hashvalueLength = String.valueOf(getFirstNumberHashvalue(fileName, hashingFunction)).length();
-        int minArraySize = (int) Math.pow(10,hashvalueLength ) - 1;
-        return minArraySize;
-    }
-
-    public int getFirstNumberHashvalue(String fileName, HashingFunction hashingFunction) throws IOException {
-        int hashValue = 0;
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
-        long line = Long.parseLong(reader.readLine());
-        reader.close();
-        hashValue = hashingFunction.getHashValue(line);
-        return hashValue;
-    }
-
-    public int getNuberOflines(String fileName) throws IOException {
-        int lines = 0;
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
-        while (reader.readLine() != null) {
-            lines++;
-        }
-        reader.close();
-        return lines;
-    }
 
     @Override
     public String toString() {
