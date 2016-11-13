@@ -11,11 +11,21 @@ public class HashingFunction3 {
     int m= 10000;
 
 
+    public HashingFunction3() {
+    }
+
+    public HashingFunction3(double a, int m) {
+        this.a = a;
+        this.m = m;
+    }
+
     public int getHashValue(long arg){
         int hashValue = (int) (m * ((arg * a) % 1));
         return hashValue;
     }
 
-
+    public String getHashingFunction3(){
+        return "com.company.HashingFunction3";
+    }
 
 }
