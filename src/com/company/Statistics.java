@@ -71,7 +71,7 @@ public class Statistics {
 
         for(int i = 0; i < methods.length; ++i) {
             if(methods[i].getName().startsWith("getChainlenght")) {
-                chainLength = (Integer) methods[i].invoke(colisionMethod, new Object[]{number, hashingFunction});
+                chainLength = (Integer) methods[i].invoke(colisionMethod, number, hashingFunction);
             }
         }
 

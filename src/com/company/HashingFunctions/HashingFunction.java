@@ -6,5 +6,6 @@ package com.company.HashingFunctions;
 public abstract class HashingFunction  {
 public abstract String getClassName();
     public abstract String getName();
+    public abstract int getHashValue(long arg);
 
 }

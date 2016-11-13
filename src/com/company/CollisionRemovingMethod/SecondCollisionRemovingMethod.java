@@ -35,8 +35,8 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
     }
 
     public void createDataArrayAndInputNUmbers(String fileName, HashingFunction hashingFunction) throws Exception {
-        getNuberOflines(fileName);
-        createDataArray(fileName);
+        //getNuberOflines(fileName);
+        createDataArray(fileName,  hashingFunction);
         inputDataToArray(fileName, hashingFunction);
     }
 
@@ -45,11 +45,11 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
         Class myclass = Class.forName(hashingFunction.getClassName());
         int hashValue=0;
         Method[] methods = myclass.getMethods();
-        Object object = myclass.newInstance();
+       //Object object = myclass.newInstance();
 
         for (int i = 0; i < methods.length; i++) {
             if (methods[i].getName().startsWith("getHashValue")) {
-                hashValue= (int) methods[i].invoke(object,line);
+                hashValue= (int) methods[i].invoke(hashingFunction,line);
             }
         }
         return hashValue;
@@ -127,9 +127,9 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
         else return false;
     }
 
-    public void createDataArray(String fileName) throws Exception {
+    private void createDataArray(String fileName, HashingFunction hashingFunction) throws Exception {
         int numberOflines = getNuberOflines(fileName);
-        int minArraySize = getMinimalArraySize(fileName);
+        int minArraySize = getMinimalArraySize(fileName, hashingFunction);
 
         if (numberOflines > minArraySize) {
             this.array = new Long[numberOflines][2];
@@ -138,19 +138,18 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
         }
     }
 
-    public int getMinimalArraySize(String fileName)throws IOException{
-        int hashvalueLength = String.valueOf(getFirstNumberHashvalue(fileName)).length();
+    public int getMinimalArraySize(String fileName, HashingFunction hashingFunction)throws IOException{
+        int hashvalueLength = String.valueOf(getFirstNumberHashvalue(fileName, hashingFunction)).length();
         int minArraySize = (int) Math.pow(10,hashvalueLength ) - 1;
         return minArraySize;
     }
 
-    public int getFirstNumberHashvalue(String fileName) throws IOException {
-        HashingFunction3 hashingFunction3 = new HashingFunction3();
+    public int getFirstNumberHashvalue(String fileName, HashingFunction hashingFunction) throws IOException {
         int hashValue = 0;
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
         long line = Long.parseLong(reader.readLine());
         reader.close();
-        hashValue = hashingFunction3.getHashValue(line);
+        hashValue = hashingFunction.getHashValue(line);
         return hashValue;
     }
 
