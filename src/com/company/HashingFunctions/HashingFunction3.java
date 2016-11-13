@@ -1,12 +1,11 @@
-package com.company;
+package com.company.HashingFunctions;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import com.company.HashingFunctions.HashingFunction;
 
 /**
  * Created by Jan Nachtigal on 10/15/2016.
  */
-public class HashingFunction3 {
+public class HashingFunction3 extends HashingFunction {
     double a =  0.0000002;
     int m= 10000;
 
@@ -24,8 +23,8 @@ public class HashingFunction3 {
         return hashValue;
     }
 
-    public String getHashingFunction3(){
-        return "com.company.HashingFunction3";
+    public String getClassName(){
+        return "com.company.HashingFunctions.HashingFunction3";
     }
 
 }

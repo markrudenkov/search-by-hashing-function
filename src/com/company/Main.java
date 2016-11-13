@@ -5,37 +5,20 @@
 
 package com.company;
 
-import com.company.HashingFunction3;
-import com.company.SecondCollisionRemovingMethod;
-import com.company.Statistics;
+
+import com.company.CollisionRemovingMethod.SecondCollisionRemovingMethod;
+import com.company.HashingFunctions.HashingFunction3;
 
 public class Main {
-    public Main() {
-    }
 
-    public static <E> void printArray(E[][] array) {
-        int i = 0;
-        Object[][] var2 = array;
-        int var3 = array.length;
-
-        for(int var4 = 0; var4 < var3; ++var4) {
-            Object[] element = var2[var4];
-            System.out.println("element = " + element[0] + " hashvalue =" + element[1] + " hashValue " + i);
-            ++i;
-        }
-
-    }
-
-    public static boolean compare(Long[][] array) {
-        return array[0][0] == null;
-    }
 
     public static void main(String[] args) throws Exception {
         HashingFunction3 hashingFunction3 = new HashingFunction3(2.0E-7D, 10000);
         String filepath = "C:\\Users\\Jan Nachtigal\\Desktop\\e\\V semesrtr\\Algorytmy is truktury danych\\dziesieckilo.txt";
-        SecondCollisionRemovingMethod foo = new SecondCollisionRemovingMethod();
+
+        SecondCollisionRemovingMethod secondCollisionRemovingMethod = new SecondCollisionRemovingMethod();
         Statistics statistics = new Statistics();
-        foo.createDataArrayAndInputNUmbers(filepath, hashingFunction3.getHashingFunction3());
-        statistics.getStatistics(filepath, foo.getSecondColissionRemovingMethod(), foo, hashingFunction3.getHashingFunction3());
+        secondCollisionRemovingMethod.createDataArrayAndInputNUmbers(filepath, hashingFunction3);
+        statistics.getStatistics(filepath, secondCollisionRemovingMethod, hashingFunction3);
     }
 }

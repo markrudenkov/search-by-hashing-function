@@ -1,4 +1,8 @@
-package com.company;
+package com.company.CollisionRemovingMethod;
+
+import com.company.FileSave;
+import com.company.HashingFunctions.HashingFunction;
+import com.company.HashingFunctions.HashingFunction3;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -8,14 +12,14 @@ import java.lang.*;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
-public class SecondCollisionRemovingMethod {
+public class SecondCollisionRemovingMethod extends CollisionMethod {
 
     HashingFunction3 hashingFunction3 = new HashingFunction3();
     Long[][] array; // array[x][0] - number element; array[x][1] - pointer element
 
 
 
-    public int getChainlenght(Long number,String hashingFunction) throws Exception {
+    public int getChainlenght(Long number,HashingFunction hashingFunction) throws Exception {
         Integer chainLength = 0;
         int hashValue = getHashValueWithLoadedHashMethod(number, hashingFunction);
        // System.out.println("NUmber "+number+" hashvalue "+hashValue);
@@ -47,7 +51,7 @@ public class SecondCollisionRemovingMethod {
     }
 
 
-    public void createDataArrayAndInputNUmbers(String fileName, String hashingFunction) throws Exception {
+    public void createDataArrayAndInputNUmbers(String fileName, HashingFunction hashingFunction) throws Exception {
         BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
         getNuberOflines(fileName);
         createDataArray(fileName);
@@ -56,9 +60,9 @@ public class SecondCollisionRemovingMethod {
 
 
 
-    public int getHashValueWithLoadedHashMethod(Long line,String hashingFunction) throws Exception {
+    public int getHashValueWithLoadedHashMethod(Long line,HashingFunction hashingFunction) throws Exception {
 
-        Class myclass = Class.forName(hashingFunction);
+        Class myclass = Class.forName(hashingFunction.getClassName());
         int hashValue=0;
         Method[] methods = myclass.getMethods();
         Object object = myclass.newInstance();
@@ -71,12 +75,12 @@ public class SecondCollisionRemovingMethod {
         return hashValue;
     }
 
-    public String getSecondColissionRemovingMethod(){
-        return "com.company.SecondCollisionRemovingMethod";
+    public String getClassName(){
+        return "com.company.CollisionRemovingMethod.SecondCollisionRemovingMethod";
     }
 
 
-    public void inputDataToArray(String fileName,String hashingFunction) throws Exception {
+    public void inputDataToArray(String fileName,HashingFunction hashingFunction) throws Exception {
         BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
         String line = null;

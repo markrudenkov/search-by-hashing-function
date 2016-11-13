@@ -3,6 +3,10 @@
 package com.company;
 
 
+import com.company.CollisionRemovingMethod.CollisionMethod;
+
+import com.company.HashingFunctions.HashingFunction;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.lang.reflect.Method;
@@ -17,8 +21,8 @@ public class Statistics {
 
 
 
-    public void getStatistics(String filename, String colisionMethod, Object object, String hashingFunction) throws Exception {
-        countChains(filename, colisionMethod, object, hashingFunction);
+    public void getStatistics(String filename, CollisionMethod colisionMethod, HashingFunction hashingFunction ) throws Exception {
+        countChains(filename, colisionMethod, hashingFunction);
         double averageChain = this.getAverageChain();
         int maxchain = this.getMaxChain().intValue();
         FileSave fileSave = new FileSave();
@@ -44,14 +48,14 @@ public class Statistics {
         return Integer.valueOf(maxChain1);
     }
 
-    public void countChains(String filename, String colisionMethod, Object object, String hashingFunction) throws Exception {
+    public void countChains(String filename, CollisionMethod colisionMethod, HashingFunction hashingFunction) throws Exception {
         this.getTestData(filename);
         Iterator var5 = this.testData.iterator();
 
         while(var5.hasNext()) {
             Long testNumber = (Long)var5.next();
             boolean chainLength = false;
-            int chainLength1 = this.getChainLengthWithDefinedColisionRemovingMethod(colisionMethod, object, testNumber, hashingFunction);
+            int chainLength1 = this.getChainLengthWithDefinedColisionRemovingMethod(colisionMethod, testNumber, hashingFunction);
             if(chainLength1 != 0) {
                 this.chainLengths.add(Integer.valueOf(chainLength1));
             }
@@ -59,15 +63,15 @@ public class Statistics {
 
     }
 
-    public int getChainLengthWithDefinedColisionRemovingMethod(String colisionMethod, Object object, Long number, String hashingFunction) throws Exception {
+    public int getChainLengthWithDefinedColisionRemovingMethod(CollisionMethod colisionMethod, Long number, HashingFunction hashingFunction) throws Exception {
         int chainLength = 0;
-        Class myClass = Class.forName(colisionMethod);
+        Class myClass = Class.forName(colisionMethod.getClassName());
         Method[] methods = myClass.getMethods();
-        Object obj = object;
+        //Object obj = object;
 
         for(int i = 0; i < methods.length; ++i) {
             if(methods[i].getName().startsWith("getChainlenght")) {
-                chainLength = ((Integer)methods[i].invoke(obj, new Object[]{number, hashingFunction})).intValue();
+                chainLength = (Integer) methods[i].invoke(colisionMethod, new Object[]{number, hashingFunction});
             }
         }
 
