@@ -11,66 +11,101 @@ import java.util.Iterator;
 
 public class Statistics {
     private ArrayList<Long> testData = new ArrayList();
+    private ArrayList<Integer> enntryLengths = new ArrayList();
     private ArrayList<Integer> chainLengths = new ArrayList();
     private ArrayList<String> outputData = new ArrayList();
 
+    public Statistics(String filename) throws Exception {
+        this.getTestData(filename);
+    }
 
-
-    public void getStatistics(String filename, CollisionMethod colisionMethod, HashingFunction hashingFunction ) throws Exception {
-        countChains(filename, colisionMethod, hashingFunction);
-        double averageChain = this.getAverageChain();
-        int maxchain = this.getMaxChain().intValue();
+    public void getStatistics(CollisionMethod colisionMethod, HashingFunction hashingFunction ) throws Exception {
+        countEntry(colisionMethod, hashingFunction);
+        countChains(colisionMethod, hashingFunction);
+        double averageEntryLength = getAverageOfList(enntryLengths);
+        int maxLength = getMaxOfList(enntryLengths);
+        double averageChain = getAverageOfList(chainLengths);
+        int maxChain =  getMaxOfList(chainLengths);
         FileSave fileSave = new FileSave();
-        String statistics = "Statistics: average chain lenght " + averageChain + "; max chain length " + maxchain;
+        String statistics = "Statistics: average entry lenght " + averageEntryLength + "; max entry length " + maxLength+"\n"
+                + "average chain lenght " + averageChain + "; max chain length " + maxLength     ;
         fileSave.saveToTxt("wynik_"+hashingFunction.getName()+"_"+colisionMethod.getName() +".txt", statistics);
     }
 
-    public double getAverageChain() {
-        double averageChain = 0.0D;
 
-        Integer chain;
-        for(Iterator var3 = this.chainLengths.iterator(); var3.hasNext(); averageChain += (double)chain.intValue()) {
-            chain = (Integer)var3.next();
-        }
-
-        averageChain /= (double)this.chainLengths.size();
-        return averageChain;
-    }
-
-    public Integer getMaxChain() {
-        boolean maxChain = false;
-        int maxChain1 = ((Integer) Collections.max(this.chainLengths)).intValue();
-        return Integer.valueOf(maxChain1);
-    }
-
-    public void countChains(String filename, CollisionMethod colisionMethod, HashingFunction hashingFunction) throws Exception {
-        this.getTestData(filename);
+  /* public void countChains(CollisionMethod colisionMethod,HashingFunction hashingFunction) throws Exception {
         Iterator var5 = this.testData.iterator();
 
         while(var5.hasNext()) {
             Long testNumber = (Long)var5.next();
-            boolean chainLength = false;
-            int chainLength1 = this.getChainLengthWithDefinedColisionRemovingMethod(colisionMethod, testNumber, hashingFunction);
-            if(chainLength1 != 0) {
-                this.chainLengths.add(Integer.valueOf(chainLength1));
-            }
+            boolean entryLength = false;
+            this.getChainlenghtWithDefinedColisionRemovingMethod(colisionMethod, testNumber, hashingFunction);
+
         }
+    }*/
 
-    }
+    public void countChains (CollisionMethod colisionMethod, HashingFunction hashingFunction) throws Exception {
 
-    public int getChainLengthWithDefinedColisionRemovingMethod(CollisionMethod colisionMethod, Long number, HashingFunction hashingFunction) throws Exception {
-        int chainLength = 0;
         Class myClass = Class.forName(colisionMethod.getClassName());
         Method[] methods = myClass.getMethods();
         //Object obj = object;
 
         for(int i = 0; i < methods.length; ++i) {
-            if(methods[i].getName().startsWith("getChainlenght")) {
-                chainLength = (Integer) methods[i].invoke(colisionMethod, number, hashingFunction);
+            if(methods[i].getName().startsWith("getChainLengts")) {
+                chainLengths= (ArrayList<Integer>) methods[i].invoke(colisionMethod,  hashingFunction);
             }
         }
 
-        return chainLength;
+
+    }
+
+
+
+    public void countEntry(CollisionMethod colisionMethod, HashingFunction hashingFunction) throws Exception {
+        Iterator var5 = this.testData.iterator();
+
+        while(var5.hasNext()) {
+            Long testNumber = (Long)var5.next();
+            boolean entryLength = false;
+            int entryLength1 = this.getEntryLengthWithDefinedColisionRemovingMethod(colisionMethod, testNumber, hashingFunction);
+            if(entryLength1 != 0) {
+                this.enntryLengths.add(Integer.valueOf(entryLength1));
+            }
+        }
+
+    }
+
+    public double getAverageOfList(ArrayList<Integer> list) {
+        double entryLength = 0.0D;
+
+        Integer chain;
+        for(Iterator var3 = list.iterator(); var3.hasNext(); entryLength += (double)chain.intValue()) {
+            chain = (Integer)var3.next();
+        }
+
+        entryLength /= (double)list.size();
+        return entryLength;
+    }
+
+    public Integer getMaxOfList(ArrayList<Integer> list) {
+        //boolean maxLength = false;
+        int maxLength1 = ((Integer) Collections.max(list)).intValue();
+        return Integer.valueOf(maxLength1);
+    }
+
+    public int getEntryLengthWithDefinedColisionRemovingMethod(CollisionMethod colisionMethod, Long number, HashingFunction hashingFunction) throws Exception {
+        int entryLength = 0;
+        Class myClass = Class.forName(colisionMethod.getClassName());
+        Method[] methods = myClass.getMethods();
+        //Object obj = object;
+
+        for(int i = 0; i < methods.length; ++i) {
+            if(methods[i].getName().startsWith("getEntryLenght")) {
+                entryLength = (Integer) methods[i].invoke(colisionMethod, number, hashingFunction);
+            }
+        }
+
+        return entryLength;
     }
 
     public void getTestData(String filename) throws Exception {
@@ -90,4 +125,8 @@ public class Statistics {
     public void setTestData(ArrayList<Long> testData) {
         this.testData = testData;
     }
-}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
+
+    public ArrayList<Integer> getChainLengths() {
+        return chainLengths;
+    }
+}

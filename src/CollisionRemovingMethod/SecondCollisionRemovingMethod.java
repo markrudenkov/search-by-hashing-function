@@ -11,59 +11,94 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.*;
 import java.lang.reflect.Method;
-import java.util.Arrays;
+import java.util.*;
 
 public class SecondCollisionRemovingMethod extends CollisionMethod {
 
     Long[][] array; // array[x][0] - number element; array[x][1] - pointer element
+    private ArrayList<Integer> chainLengts = new ArrayList<>();
+    int chain=0;
 
-    public int getChainlenght(Long number,HashingFunction hashingFunction) throws Exception {
-        Integer chainLength = 0;
+    @Override
+    public int getEntryLenght(Long number, HashingFunction hashingFunction) throws Exception {
+        Integer entryLength = 1;
         int hashValue = getHashValueWithLoadedHashMethod(number, hashingFunction);
 
-        if (array[hashValue][1] == null) {
-            System.out.println("Hahvalue "+hashValue+ " number "+ array[hashValue][0]+" pointer "+array[hashValue][1]);
+       /* if (array[hashValue][1] == null) {
+            System.out.println("Hahvalue " + hashValue + " number " + array[hashValue][0] + " pointer " + array[hashValue][1]);
 
+        }*/
+
+        while ((!compareNumbers(number, hashValue))) {
+            hashValue = Long.valueOf(array[hashValue][1]).intValue();
+            entryLength++;
         }
+        /*FileSave fileSave = new FileSave();
+        String resultsOfNumberSearch = fileSave.searchDataToString(hashValue, number, array[hashValue][0].longValue());
+        fileSave.saveToTxt("wynik_" + hashingFunction.getName() + "_" + this.getName() + ".txt", resultsOfNumberSearch);*/
 
-
-        while ((!compareNumbers(number,hashValue))){
-                hashValue= Long.valueOf(array[hashValue][1]).intValue();
-
-
-                chainLength++;
-        }
-        FileSave fileSave = new FileSave();
-        String resultsOfNumberSearch = fileSave.searchDataToString(hashValue,number, array[hashValue][0].longValue());
-        fileSave.saveToTxt("wynik_"+hashingFunction.getName()+"_"+this.getName() +".txt",resultsOfNumberSearch);
-
-        return chainLength;
+        return entryLength;
     }
 
-    public boolean compareNumbers(Long number,int hashValue){
+
+
+
+    public void getChains() {
+
+        for (Integer i = 0; i < array.length; i++) {
+            if (array[i][1] == null) {
+                this.chain = 0;
+
+                getRing(i, chain);
+
+
+                if (chain != 0) {
+                    chainLengts.add(chain);
+                }
+            }
+        }
+
+
+    }
+
+    private void getRing(Integer i, int chain) {
+        for (Integer j = 0; j < array.length; j++) {
+            if (array[j][1] != null){
+                if (array[j][1].intValue() == i) {
+                    this.chain++;
+                    this.getRing(j, chain);
+
+                }
+            }
+
+        }
+    }
+
+
+    public boolean compareNumbers(Long number, int hashValue) {
         return (number == array[hashValue][0].longValue());
     }
 
     public void createDataArrayAndInputNUmbers(String fileName, HashingFunction hashingFunction) throws Exception {
-        createDataArray(fileName,  hashingFunction);
+        createDataArray(fileName, hashingFunction);
         inputDataToArray(fileName, hashingFunction);
     }
 
-    public String getClassName(){
+    public String getClassName() {
         return "CollisionRemovingMethod.SecondCollisionRemovingMethod";
     }
 
-    public String getName(){
+    public String getName() {
         return "SecondCollisionRemovingMethod";
     }
 
-    public void inputDataToArray(String fileName,HashingFunction hashingFunction) throws Exception {
+    public void inputDataToArray(String fileName, HashingFunction hashingFunction) throws Exception {
         //BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
         String line = null;
 
         while ((line = reader.readLine()) != null) {
-           // int hashValue = hashingFunction3.getHashValue(Long.parseLong(line));
+            // int hashValue = hashingFunction3.getHashValue(Long.parseLong(line));
             int hashValue = getHashValueWithLoadedHashMethod(Long.parseLong(line), hashingFunction);
 
             if (checkIfEmptyNumberElement(hashValue)) {
@@ -83,7 +118,7 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
         int currentHashValue = hashValue;
 
         while (pointer != null) {
-            currentHashValue=pointer.intValue();
+            currentHashValue = pointer.intValue();
             pointer = this.array[pointer.intValue()][1];
         }
         return currentHashValue;
@@ -122,18 +157,16 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
     }
 
 
-    @Override
-    public String toString() {
-        return "SecondCollisionRemovingMethod{" +
-                "array=" + Arrays.toString(array) +
-                '}';
-    }
-
     public Long[][] getArray() {
         return array;
     }
 
     public void setArray(Long[][] array) {
         this.array = array;
+    }
+
+    public ArrayList<Integer> getChainLengts(HashingFunction hashingFunction) {
+        getChains();
+        return chainLengts;
     }
 }

@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
@@ -18,6 +19,7 @@ public class LinearCollisionRemovingMethod extends CollisionMethod {
     Long[] array;
     int arraySize;
 
+
     @Override
     public void createDataArrayAndInputNUmbers(String fileName, HashingFunction hashingFunction) throws Exception {
         createDataArray(fileName,  hashingFunction);
@@ -25,20 +27,23 @@ public class LinearCollisionRemovingMethod extends CollisionMethod {
     }
 
     @Override
-    public int getChainlenght(Long number, HashingFunction hashingFunction) throws Exception {
-        Integer chainLength = 0;
+    public ArrayList<Integer> getChainLengts( HashingFunction hashingFunction) {
+        return null;
+    }
+
+    @Override
+    public int getEntryLenght(Long number, HashingFunction hashingFunction) throws Exception {
+        Integer entryLength = 1;
         int hashValue = getHashValueWithLoadedHashMethod(number, hashingFunction);
         while ((!compareNumbers(number,hashValue))){
-
             hashValue= getNextHashValue(hashValue);
-
-            chainLength++;
+            entryLength++;
         }
-        FileSave fileSave = new FileSave();
+        /*FileSave fileSave = new FileSave();
         String resultsOfNumberSearch = fileSave.searchDataToString(hashValue,number, array[hashValue].longValue());
-        fileSave.saveToTxt("wynik_"+hashingFunction.getName()+"_"+this.getName() +".txt",resultsOfNumberSearch);
+        fileSave.saveToTxt("wynik_"+hashingFunction.getName()+"_"+this.getName() +".txt",resultsOfNumberSearch);*/
 
-        return chainLength;
+        return entryLength;
     }
 
     public int getNextHashValue(int nextHashValue) {

@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 public abstract class CollisionMethod {
 
@@ -14,10 +15,11 @@ public abstract class CollisionMethod {
 
     public abstract String getClassName();
     public abstract String getName();
-    public abstract int getChainlenght(Long number,HashingFunction hashingFunction) throws Exception;
+    public abstract int getEntryLenght(Long number,HashingFunction hashingFunction) throws Exception;
 
     public abstract void inputDataToArray(String fileName, HashingFunction hashingFunction) throws Exception;
     public abstract void createDataArrayAndInputNUmbers(String fileName, HashingFunction hashingFunction) throws Exception;
+    public abstract ArrayList<Integer> getChainLengts( HashingFunction hashingFunction);
 
     public int getNuberOflines(String fileName) throws IOException {
         int lines = 0;
