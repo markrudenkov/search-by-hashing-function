@@ -23,12 +23,14 @@ public class Statistics {
         countEntry(colisionMethod, hashingFunction);
         countChains(colisionMethod, hashingFunction);
         double averageEntryLength = getAverageOfList(enntryLengths);
-        int maxLength = getMaxOfList(enntryLengths);
+       int maxLength = getMaxOfList(enntryLengths);
+
         double averageChain = getAverageOfList(chainLengths);
         int maxChain =  getMaxOfList(chainLengths);
+
         FileSave fileSave = new FileSave();
         String statistics = "Statistics: average entry lenght " + averageEntryLength + "; max entry length " + maxLength+"\n"
-                + "average chain lenght " + averageChain + "; max chain length " + maxLength     ;
+                + "average chain lenght " + averageChain + "; max chain length " + maxChain     ;
         fileSave.saveToTxt("wynik_"+hashingFunction.getName()+"_"+colisionMethod.getName() +".txt", statistics);
     }
 
@@ -55,7 +57,6 @@ public class Statistics {
                 chainLengths= (ArrayList<Integer>) methods[i].invoke(colisionMethod,  hashingFunction);
             }
         }
-
 
     }
 

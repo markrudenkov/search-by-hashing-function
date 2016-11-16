@@ -18,7 +18,22 @@ import java.util.Arrays;
 public class LinearCollisionRemovingMethod extends CollisionMethod {
     Long[] array;
     int arraySize;
+    int hashArraySize;
+    int[] hashArray ;
+    private ArrayList<ArrayList<Integer>> hashInstances = new ArrayList<>();
+    ArrayList<Integer> chainLengts = new ArrayList<>();
 
+
+    public LinearCollisionRemovingMethod(String fileName, HashingFunction hashingFunction) throws IOException {
+        this.hashArraySize =getHashArraySize(fileName, hashingFunction);
+        hashArray = new int [this.hashArraySize];
+    }
+
+    public int getHashArraySize(String fileName, HashingFunction hashingFunction)throws IOException{
+        int hashvalueLength = String.valueOf(getFirstNumberHashvalue(fileName, hashingFunction)).length();
+        int hashArraySize = (int) Math.pow(10,hashvalueLength ) - 1;
+        return hashArraySize;
+    }
 
     @Override
     public void createDataArrayAndInputNUmbers(String fileName, HashingFunction hashingFunction) throws Exception {
@@ -28,13 +43,20 @@ public class LinearCollisionRemovingMethod extends CollisionMethod {
 
     @Override
     public ArrayList<Integer> getChainLengts( HashingFunction hashingFunction) {
-        return null;
+        getChains();
+
+        return chainLengts;
     }
 
     @Override
     public int getEntryLenght(Long number, HashingFunction hashingFunction) throws Exception {
         Integer entryLength = 1;
         int hashValue = getHashValueWithLoadedHashMethod(number, hashingFunction);
+
+        if((!compareNumbers(number,hashValue))){
+            this.countHashINstance(hashValue);
+        }
+
         while ((!compareNumbers(number,hashValue))){
             hashValue= getNextHashValue(hashValue);
             entryLength++;
@@ -44,6 +66,46 @@ public class LinearCollisionRemovingMethod extends CollisionMethod {
         fileSave.saveToTxt("wynik_"+hashingFunction.getName()+"_"+this.getName() +".txt",resultsOfNumberSearch);*/
 
         return entryLength;
+    }
+
+
+    public void getChains(){
+        for (int element  : this.hashArray){
+            if(element != 0){
+                chainLengts.add(element);
+            }
+
+        }
+    }
+
+
+
+    public void countHashINstance(Integer hashValue){
+        /*boolean append = false;*/
+
+        this.hashArray[hashValue]=this.hashArray[hashValue]+1;
+
+
+       /* for(int i=0; i < hashInstances.size();i++){
+             append = false;
+            if(hashInstances.get(i).get(0) == hashValue){
+
+                int buf = hashInstances.get(i).get(1).intValue();
+                buf=buf+1;
+                this.hashInstances.get(i).set(1,buf) ;
+                System.out.println(hashInstances.get(i).toString());
+                append = true;
+            }
+
+        }
+        if (!append){
+            ArrayList<Integer> hashCounter = new ArrayList<>();
+            hashCounter.add(0,0);
+            hashCounter.add(1,0);
+            hashCounter.set(0,hashValue);
+            hashInstances.add(hashCounter);
+        }*/
+
     }
 
     public int getNextHashValue(int nextHashValue) {
@@ -133,7 +195,15 @@ public class LinearCollisionRemovingMethod extends CollisionMethod {
     @Override
     public String toString() {
         return "LinearCollisionRemovingMethod{" +
-                "array=" + Arrays.toString(array) +
+                "chainLengts=" + chainLengts +
                 '}';
+    }
+
+    public ArrayList<ArrayList<Integer>> getHashInstances() {
+        return hashInstances;
+    }
+
+    public int[] getHashArray() {
+        return hashArray;
     }
 }

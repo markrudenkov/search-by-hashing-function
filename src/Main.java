@@ -27,12 +27,12 @@ public class Main {
     }
 
 
-    public static <E> void printArray(E[] array) {
+    public static <E> void printArray(int[] array) {
         int i = 0;
 
         int length = array.length;
 
-        for(E element: array) {
+        for(int element: array) {
 
             System.out.println("element = " + element  + " hashValue " + i);
             i++;
@@ -55,7 +55,7 @@ public class Main {
              // hashing function 3
         SecondCollisionRemovingMethod secondCollisionRemovingMethod = new SecondCollisionRemovingMethod();
         secondCollisionRemovingMethod.createDataArrayAndInputNUmbers(filepath, hashingFunction3);
-        //printArray(secondCollisionRemovingMethod.getArray());
+
 
 
 
@@ -64,33 +64,34 @@ public class Main {
 
         // Modular hashing function
 
-       // SecondCollisionRemovingMethod secondCollisionRemovingMethod2 = new SecondCollisionRemovingMethod();
-       // secondCollisionRemovingMethod2.createDataArrayAndInputNUmbers(filepath,hashingFunctionModular);
+        SecondCollisionRemovingMethod secondCollisionRemovingMethod2 = new SecondCollisionRemovingMethod();
+        secondCollisionRemovingMethod2.createDataArrayAndInputNUmbers(filepath,hashingFunctionModular);
 
 
 
-       // Statistics statistics2 = new Statistics();
-        //statistics2.getStatistics(filepath, secondCollisionRemovingMethod2,hashingFunctionModular);
+        Statistics statistics2 = new Statistics(filepath);
+        statistics2.getStatistics(secondCollisionRemovingMethod2,hashingFunctionModular);
 
         System.out.println("Second Collision Removing Method Coumputation is done");
 
-       /* // Linear Colision removing method
+        // Linear Colision removing method
 
             // hashing function 3
-        LinearCollisionRemovingMethod linearCollisionRemovingMethod = new LinearCollisionRemovingMethod();
+        LinearCollisionRemovingMethod linearCollisionRemovingMethod = new LinearCollisionRemovingMethod(filepath,hashingFunction3);
         linearCollisionRemovingMethod.createDataArrayAndInputNUmbers(filepath,hashingFunction3);
 
-        Statistics statistics3 = new Statistics();
-        statistics3.getStatistics(filepath, linearCollisionRemovingMethod,hashingFunction3);
+        Statistics statistics3 = new Statistics(filepath);
+        statistics3.getStatistics(linearCollisionRemovingMethod,hashingFunction3);
+
 
              // Modular hashing function
-        LinearCollisionRemovingMethod linearCollisionRemovingMethod1 = new LinearCollisionRemovingMethod();
+        LinearCollisionRemovingMethod linearCollisionRemovingMethod1 = new LinearCollisionRemovingMethod(filepath,hashingFunction3);
         linearCollisionRemovingMethod1.createDataArrayAndInputNUmbers(filepath,hashingFunctionModular);
 
-        Statistics statistics4 = new Statistics();
-        statistics4.getStatistics(filepath,linearCollisionRemovingMethod,hashingFunctionModular);
+        Statistics statistics4 = new Statistics(filepath);
+        statistics4.getStatistics(linearCollisionRemovingMethod,hashingFunctionModular);
 
-        System.out.println("Linear Collision Removing Method Coumputation is done");*/
+        System.out.println("Linear Collision Removing Method Coumputation is done");
 
 
         System.out.println("Computation is done");
