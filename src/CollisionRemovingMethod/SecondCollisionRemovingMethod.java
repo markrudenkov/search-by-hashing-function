@@ -18,25 +18,23 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
     Long[][] array; // array[x][0] - number element; array[x][1] - pointer element
     private ArrayList<Integer> chainLengts = new ArrayList<>();
     int chain=0;
+    double arraySpareSpace = 2;
+
+
+    public SecondCollisionRemovingMethod(String fileName, HashingFunction hashingFunction) throws Exception {
+        this.hashingFunction = hashingFunction;
+        createDataArrayAndInputNUmbers(fileName, hashingFunction);
+    }
 
     @Override
     public int getEntryLenght(Long number, HashingFunction hashingFunction) throws Exception {
         Integer entryLength = 1;
         int hashValue = getHashValueWithLoadedHashMethod(number, hashingFunction);
 
-       /* if (array[hashValue][1] == null) {
-            System.out.println("Hahvalue " + hashValue + " number " + array[hashValue][0] + " pointer " + array[hashValue][1]);
-
-        }*/
-
         while ((!compareNumbers(number, hashValue))) {
             hashValue = Long.valueOf(array[hashValue][1]).intValue();
             entryLength++;
         }
-        /*FileSave fileSave = new FileSave();
-        String resultsOfNumberSearch = fileSave.searchDataToString(hashValue, number, array[hashValue][0].longValue());
-        fileSave.saveToTxt("wynik_" + hashingFunction.getName() + "_" + this.getName() + ".txt", resultsOfNumberSearch);*/
-
         return entryLength;
     }
 
@@ -129,9 +127,9 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
         int minArraySize = getMinimalArraySize(fileName, hashingFunction);
 
         if (numberOflines > minArraySize) {
-            this.array = new Long[numberOflines][2];
+            this.array = new Long[(int) (numberOflines* arraySpareSpace)][2];
         } else {
-            this.array = new Long[minArraySize][2];
+            this.array = new Long[(int) (minArraySize* arraySpareSpace)][2];
         }
     }
 

@@ -10,30 +10,34 @@ public class PrimeNumber {
 
     public int getPrimeNumber( int uperRange) {
         int primeNumber = 0;
-        int lowerRange = (int)0.5*uperRange;
+        int lowerRange = (int)0.9*uperRange;
         ArrayList<Integer> primeNumbers = new ArrayList<>();
 
-        int i, j, flag = 0;
-        for (i = lowerRange; i <= uperRange; i++) {
+        int i;
+        int  j, flag = 1;
+        for (i = uperRange; i >=0; i--) {
+            flag = 1;
+
             for (j = 2; j < i; j++) {
                 if (i % j == 0) {
                     flag = 0;
                     break;
-                } else {
-                    flag = 1;
                 }
-
-
-                if (flag == 1) {
-                    primeNumbers.add(i);
-                }
-
             }
 
 
 
+                if (flag == 1) {
+                    primeNumber=i;
+                    break;
+                }
+
+
+
+
+
         }
-        primeNumber = Collections.max(primeNumbers).intValue();
+        //primeNumber = Collections.max(primeNumbers).intValue();
         return primeNumber;
     }
 }

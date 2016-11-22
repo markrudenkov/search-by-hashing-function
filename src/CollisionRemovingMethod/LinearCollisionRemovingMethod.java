@@ -24,15 +24,29 @@ public class LinearCollisionRemovingMethod extends CollisionMethod {
     ArrayList<Integer> chainLengts = new ArrayList<>();
 
 
-    public LinearCollisionRemovingMethod(String fileName, HashingFunction hashingFunction) throws IOException {
+    public LinearCollisionRemovingMethod(String fileName, HashingFunction hashingFunction) throws Exception {
+        this.hashingFunction = hashingFunction;
         this.hashArraySize =getHashArraySize(fileName, hashingFunction);
         hashArray = new int [this.hashArraySize];
+        createDataArrayAndInputNUmbers(fileName,hashingFunction);
+
     }
 
     public int getHashArraySize(String fileName, HashingFunction hashingFunction)throws IOException{
-        int hashvalueLength = String.valueOf(getFirstNumberHashvalue(fileName, hashingFunction)).length();
-        int hashArraySize = (int) Math.pow(10,hashvalueLength ) - 1;
-        return hashArraySize;
+        int arraySize = 0;
+        int minArraySize = getMinimalArraySize(fileName, hashingFunction);
+        int numberOflines = getNuberOflines(fileName);
+
+      /*  int numberLength = getFirstNumberLength(fileName);
+        Long maxNumber =  Long Math.pow(10,numberLength ) - 1;
+        int maxHashValue = hashingFunction.getHashValue(maxNumber);*/
+
+        if (numberOflines > minArraySize) {
+            arraySize = numberOflines;
+        } else {
+            arraySize = minArraySize;
+        }
+        return arraySize;
     }
 
     @Override
@@ -191,6 +205,8 @@ public class LinearCollisionRemovingMethod extends CollisionMethod {
     public Long[] getArray() {
         return array;
     }
+
+
 
     @Override
     public String toString() {

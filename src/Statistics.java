@@ -15,11 +15,13 @@ public class Statistics {
     private ArrayList<Integer> chainLengths = new ArrayList();
     private ArrayList<String> outputData = new ArrayList();
 
-    public Statistics(String filename) throws Exception {
+    public Statistics(String filename, CollisionMethod colisionMethod) throws Exception {
         this.getTestData(filename);
+        getStatistics(colisionMethod);
     }
 
-    public void getStatistics(CollisionMethod colisionMethod, HashingFunction hashingFunction ) throws Exception {
+    public void getStatistics(CollisionMethod colisionMethod ) throws Exception {
+        HashingFunction hashingFunction = colisionMethod.getHashingFunction();
         countEntry(colisionMethod, hashingFunction);
         countChains(colisionMethod, hashingFunction);
         double averageEntryLength = getAverageOfList(enntryLengths);
@@ -34,23 +36,10 @@ public class Statistics {
         fileSave.saveToTxt("wynik_"+hashingFunction.getName()+"_"+colisionMethod.getName() +".txt", statistics);
     }
 
-
-  /* public void countChains(CollisionMethod colisionMethod,HashingFunction hashingFunction) throws Exception {
-        Iterator var5 = this.testData.iterator();
-
-        while(var5.hasNext()) {
-            Long testNumber = (Long)var5.next();
-            boolean entryLength = false;
-            this.getChainlenghtWithDefinedColisionRemovingMethod(colisionMethod, testNumber, hashingFunction);
-
-        }
-    }*/
-
     public void countChains (CollisionMethod colisionMethod, HashingFunction hashingFunction) throws Exception {
 
         Class myClass = Class.forName(colisionMethod.getClassName());
         Method[] methods = myClass.getMethods();
-        //Object obj = object;
 
         for(int i = 0; i < methods.length; ++i) {
             if(methods[i].getName().startsWith("getChainLengts")) {
@@ -59,8 +48,6 @@ public class Statistics {
         }
 
     }
-
-
 
     public void countEntry(CollisionMethod colisionMethod, HashingFunction hashingFunction) throws Exception {
         Iterator var5 = this.testData.iterator();
@@ -89,7 +76,6 @@ public class Statistics {
     }
 
     public Integer getMaxOfList(ArrayList<Integer> list) {
-        //boolean maxLength = false;
         int maxLength1 = ((Integer) Collections.max(list)).intValue();
         return Integer.valueOf(maxLength1);
     }
@@ -98,7 +84,6 @@ public class Statistics {
         int entryLength = 0;
         Class myClass = Class.forName(colisionMethod.getClassName());
         Method[] methods = myClass.getMethods();
-        //Object obj = object;
 
         for(int i = 0; i < methods.length; ++i) {
             if(methods[i].getName().startsWith("getEntryLenght")) {

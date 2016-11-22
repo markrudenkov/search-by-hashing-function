@@ -21,6 +21,8 @@ public abstract class CollisionMethod {
     public abstract void createDataArrayAndInputNUmbers(String fileName, HashingFunction hashingFunction) throws Exception;
     public abstract ArrayList<Integer> getChainLengts( HashingFunction hashingFunction);
 
+    HashingFunction hashingFunction;
+
     public int getNuberOflines(String fileName) throws IOException {
         int lines = 0;
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
@@ -78,5 +80,13 @@ public abstract class CollisionMethod {
         return hashValue;
     }
 
+    public int getFirstNumberLength(String filename) throws IOException{
+        BufferedReader reader = new BufferedReader(new FileReader(filename));
+        int lenght  = reader.readLine().length();
+        return lenght;
+    }
 
+    public HashingFunction getHashingFunction() {
+        return hashingFunction;
+    }
 }
