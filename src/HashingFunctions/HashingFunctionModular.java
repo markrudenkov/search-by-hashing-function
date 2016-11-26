@@ -1,12 +1,8 @@
 package HashingFunctions;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
-/**
- * Created by Jan Nachtigal on 11/13/2016.
- */
 public class HashingFunctionModular extends HashingFunction {
 
     int numberOfLines;
@@ -18,15 +14,11 @@ public class HashingFunctionModular extends HashingFunction {
         return hashvalue;
     }
 
-    public HashingFunctionModular(String filename) throws IOException {
-        numberOfLines = this.getNuberOflines(filename);
-        modularValue = (int) numberOfLines ;
+    public HashingFunctionModular(ArrayList<Long> testData) throws IOException {
+        numberOfLines = this.getNuberOflines(testData);
         PrimeNumber primeNumber = new PrimeNumber();
-        modularValue = primeNumber.getPrimeNumber(modularValue);
-
+        modularValue = primeNumber.getPrimeNumber(numberOfLines);
     }
-
-
 
     @Override
     public String getClassName() {
