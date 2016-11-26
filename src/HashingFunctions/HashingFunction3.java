@@ -10,8 +10,8 @@ import java.io.IOException;
  * Created by Jan Nachtigal on 10/15/2016.
  */
 public class HashingFunction3 extends HashingFunction {
-    double a = 0.2;
-    int m = 100000000;
+    double a = 0.1;
+    int m = 10000000;
 
 
 

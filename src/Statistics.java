@@ -46,7 +46,7 @@ public class Statistics {
                 chainLengths= (ArrayList<Integer>) methods[i].invoke(colisionMethod,  hashingFunction);
             }
         }
-
+        System.out.println("chains counted");
     }
 
     public void countEntry(CollisionMethod colisionMethod, HashingFunction hashingFunction) throws Exception {
@@ -60,7 +60,7 @@ public class Statistics {
                 this.enntryLengths.add(Integer.valueOf(entryLength1));
             }
         }
-
+        System.out.println("entries counted");
     }
 
     public double getAverageOfList(ArrayList<Integer> list) {

@@ -80,6 +80,7 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
     public void createDataArrayAndInputNUmbers(String fileName, HashingFunction hashingFunction) throws Exception {
         createDataArray(fileName, hashingFunction);
         inputDataToArray(fileName, hashingFunction);
+        System.out.println("Input is done");
     }
 
     public String getClassName() {
@@ -94,7 +95,7 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
         //BufferedReader b = new BufferedReader(new InputStreamReader(System.in));
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
         String line = null;
-
+        int i=0;
         while ((line = reader.readLine()) != null) {
             // int hashValue = hashingFunction3.getHashValue(Long.parseLong(line));
             int hashValue = getHashValueWithLoadedHashMethod(Long.parseLong(line), hashingFunction);
@@ -107,8 +108,10 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
                 this.array[indexOfNewChainELement][0] = Long.parseLong(line);
                 this.array[indexOfPredecessorOfLastChainElement][1] = indexOfNewChainELement.longValue();
             }
+            i++;
         }
         reader.close();
+
     }
 
     public int getChainElementWithEmptyPointer(int hashValue) {
@@ -127,9 +130,11 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
         int minArraySize = getMinimalArraySize(fileName, hashingFunction);
 
         if (numberOflines > minArraySize) {
-            this.array = new Long[(int) (numberOflines* arraySpareSpace)][2];
+            this.array = new Long[numberOflines][2];
+            System.out.println("Created table");
         } else {
-            this.array = new Long[(int) (minArraySize* arraySpareSpace)][2];
+            this.array = new Long[minArraySize][2];
+            System.out.println("Created table");
         }
     }
 

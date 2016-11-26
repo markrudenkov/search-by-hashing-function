@@ -30,11 +30,11 @@ public class Main {
 
         // Modular hashing function
 
-       // SecondCollisionRemovingMethod secondCollisionRemovingMethod2 = new SecondCollisionRemovingMethod(filepath, hashingFunctionModular);
+       /* SecondCollisionRemovingMethod secondCollisionRemovingMethod2 = new SecondCollisionRemovingMethod(filepath, hashingFunctionModular);
 
-       // Statistics statistics2 = new Statistics(filepath,secondCollisionRemovingMethod2);
+        Statistics statistics2 = new Statistics(filepath,secondCollisionRemovingMethod2);
 
-       System.out.println("Second Collision Removing Method Coumputation is done");
+       System.out.println("Second Collision Removing Method Coumputation is done");*/
 
         // Linear Colision removing method
 
