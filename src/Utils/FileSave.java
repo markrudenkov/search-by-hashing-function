@@ -18,4 +18,20 @@ public class FileSave {
         fileWriter.println(line);
         fileWriter.close();
     }
+
+    public void saveStatistics(double averageEntryLength,
+                               int maxLength,
+                               double averageChain,
+                               int maxChain,
+                               String functionName,
+                               String colissionRemovingMethod) throws IOException {
+
+        String statistics = "Statistics: " + "\n"
+                + " average amount of etries in hased table " + averageEntryLength + "\n"
+                + " maximum amount of etries in hased table " + maxLength + "\n"
+                + " average chain lenght " + averageChain + "\n"
+                + " maximum chain length " + maxChain + "\n";
+        saveToTxt("wynik_" + functionName + "_" + colissionRemovingMethod + ".txt", statistics);
+
+    }
 }

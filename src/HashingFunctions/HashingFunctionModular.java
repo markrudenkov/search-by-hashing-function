@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 public class HashingFunctionModular extends HashingFunction {
 
-    int numberOfLines;
-    int modularValue;
+    private int numberOfLines;
+    private int modularValue;
 
     @Override
     public int getHashValue(long arg) {

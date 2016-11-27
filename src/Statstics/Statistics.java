@@ -1,3 +1,5 @@
+package Statstics;
+
 import CollisionRemovingMethod.CollisionMethod;
 import HashingFunctions.HashingFunction;
 import Utils.FileSave;
@@ -26,17 +28,16 @@ public class Statistics {
         countChains(colisionMethod, hashingFunction);
         double averageEntryLength = getAverageOfList(enntryLengths);
         int maxLength = getMaxOfList(enntryLengths);
-
         double averageChain = getAverageOfList(chainLengths);
         int maxChain = getMaxOfList(chainLengths);
 
         FileSave fileSave = new FileSave();
-        String statistics = "Statistics: "+"\n"
-                +" average amount of etries in hased table " + averageEntryLength + "\n"
-                +" maximum amount of etries in hased table " + maxLength + "\n"
-                + " average chain lenght " + averageChain + "\n"
-                +" maximum chain length " + maxChain+"\n";
-        fileSave.saveToTxt("wynik_" + hashingFunction.getName() + "_" + colisionMethod.getName() + ".txt", statistics);
+        fileSave.saveStatistics(averageEntryLength,
+                maxLength,
+                averageChain,
+                maxChain,
+                hashingFunction.getName(),
+                colisionMethod.getName());
     }
 
     public void countChains(CollisionMethod colisionMethod, HashingFunction hashingFunction) throws Exception {

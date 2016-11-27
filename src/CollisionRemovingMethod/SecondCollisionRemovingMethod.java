@@ -21,9 +21,6 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
     public int getEntryLenght(Long number, HashingFunction hashingFunction) throws Exception {
         Integer entryLength = 1;
         int hashValue = getHashValueWithLoadedHashMethod(number, hashingFunction);
-        if ((!compareNumbers(number, hashValue))) {
-            this.countHashINstance(hashValue);
-        }
 
         while ((!compareNumbers(number, hashValue))) {
             hashValue = Long.valueOf(array[hashValue][1]).intValue();
@@ -54,6 +51,7 @@ public class SecondCollisionRemovingMethod extends CollisionMethod {
     public void inputDataToArray(ArrayList<Long> testData, HashingFunction hashingFunction) throws Exception {
         for (Long number : testData) {
             int hashValue = getHashValueWithLoadedHashMethod(number, hashingFunction);
+            this.countHashINstance(hashValue);
             if (checkIfEmptyNumberElement(hashValue)) {
                 this.array[hashValue][0] = number;
             } else {

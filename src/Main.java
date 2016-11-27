@@ -2,6 +2,7 @@ import CollisionRemovingMethod.LinearCollisionRemovingMethod;
 import CollisionRemovingMethod.SecondCollisionRemovingMethod;
 import HashingFunctions.HashingFunction3;
 import HashingFunctions.HashingFunctionModular;
+import Statstics.Statistics;
 import Utils.InputData;
 
 import java.io.File;
@@ -20,7 +21,7 @@ public class Main {
         HashingFunction3 hashingFunction3 = new HashingFunction3(testData);
         HashingFunctionModular hashingFunctionModular = new HashingFunctionModular(testData);
 
-    /*    // Second Colision removing method
+       // Second Colision removing method
         // hashing function 3
         SecondCollisionRemovingMethod secondCollisionRemovingMethod = new SecondCollisionRemovingMethod(testData, hashingFunction3);
         Statistics statistics = new Statistics(testData, secondCollisionRemovingMethod);
@@ -29,7 +30,7 @@ public class Main {
         SecondCollisionRemovingMethod secondCollisionRemovingMethod2 = new SecondCollisionRemovingMethod(testData, hashingFunctionModular);
         Statistics statistics2 = new Statistics(testData, secondCollisionRemovingMethod2);
 
-        System.out.println("Second Collision Removing Method Coumputation is done");*/
+        System.out.println("Second Collision Removing Method Coumputation is done");
 
         // Linear Colision removing method
         // hashing function 3

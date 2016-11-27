@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public abstract class CollisionMethod {
 
-
     int hashArraySize;
     int[] hashArray ;
     private ArrayList<Integer> chainLengts = new ArrayList<>();
@@ -29,8 +28,6 @@ public abstract class CollisionMethod {
         return testData.size();
     }
 
-
-
     public int getHashValueWithLoadedHashMethod(Long line,HashingFunction hashingFunction) throws Exception {
 
         Class myclass = Class.forName(hashingFunction.getClassName());
@@ -48,7 +45,6 @@ public abstract class CollisionMethod {
     public void countHashINstance(Integer hashValue){
         this.hashArray[hashValue]=this.hashArray[hashValue]+1;
     }
-
 
     public int getHashArraySize(ArrayList<Long> testData, HashingFunction hashingFunction)throws IOException{
         int arraySize = 0;
@@ -86,7 +82,7 @@ public abstract class CollisionMethod {
     public void getChains(){
         for (int element  : this.hashArray){
             if(element != 0){
-                chainLengts.add(element+1);
+                chainLengts.add(element);
             }
         }
     }
